@@ -1,0 +1,31 @@
+{
+  "name": "@taiyuuki/eslint-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "eslint/index.js",
+  "types": "eslint/index.d.ts",
+  "type": "module",
+  "files": [
+    "eslint"
+  ],
+  "scripts": {
+    "dev": "rollup -c --watch",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "author": "taiyuuki <taiyuuki@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@taiyuuki/eslint-config": "link:."
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "rollup": "^4.10.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@antfu/eslint-config": "^2.6.4"
+  }
+}
