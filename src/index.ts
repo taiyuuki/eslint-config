@@ -60,12 +60,16 @@ export function tyk_eslint(options?: OptionsConfig): OptionsConfig {
 
         },
         rules: {
+            // off
+            'curly': 'off',
+            'no-throw-literal': 'off',
+            'import/no-mutable-exports': 'off',
+
             // error
             'no-extra-parens': 'error',
 
             // best practices
             'accessor-pairs': 'warn',
-            'curly': ['warn', 'multi'],
             'no-empty-function': 'warn',
             'require-await': 'warn',
 
