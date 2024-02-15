@@ -13,7 +13,7 @@ export function tyk_eslint(options?: OptionsConfig): OptionsConfig {
                     objects: 'always-multiline',
                     imports: 'always-multiline',
                     exports: 'always-multiline',
-                    functions: 'never',
+                    functions: 'always-multiline',
                 }],
                 'comma-spacing': 'warn',
                 'comma-style': 'warn',
@@ -64,6 +64,11 @@ export function tyk_eslint(options?: OptionsConfig): OptionsConfig {
             'curly': 'off',
             'no-throw-literal': 'off',
             'import/no-mutable-exports': 'off',
+            'prefer-promise-reject-errors': 'off',
+            'arrow-parens': 'off',
+            'no-new-function': 'off',
+
+            'ts/ban-types': 'off',
 
             // error
             'no-extra-parens': 'error',
@@ -86,6 +91,7 @@ export function tyk_eslint(options?: OptionsConfig): OptionsConfig {
                 ignoreReadBeforeAssign: true,
             }],
             'rest-spread-spacing': ['warn', 'never'],
+
         },
         ignores: [],
     }
