@@ -1,6 +1,3 @@
-import antfu from '@antfu/eslint-config'
-import { tyk_eslint } from './eslint/index.js'
+import tyk_eslint from '@taiyuuki/eslint-config'
 
-export default antfu(tyk_eslint({
-    typescript: true,
-}))
+export default tyk_eslint({ ts: true })

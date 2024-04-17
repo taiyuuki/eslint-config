@@ -7,7 +7,7 @@ const config = defineConfig([
         input: ['src/index.ts'],
         output: [
             {
-                dir: 'eslint',
+                dir: 'dist',
                 format: 'esm',
             },
         ],
@@ -15,11 +15,12 @@ const config = defineConfig([
             ts(),
         ],
     },
+
     // 打包类型声明
     {
         input: 'src/index.ts',
         output: {
-            dir: 'eslint',
+            dir: 'dist',
             format: 'esm',
         },
         plugins: [

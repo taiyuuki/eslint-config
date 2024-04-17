@@ -1,99 +1,52 @@
-import type antfu from '@antfu/eslint-config'
+import type { ESLint, Linter } from 'eslint'
+import stylistic from '@stylistic/eslint-plugin'
+import { stylistic_base } from './base'
+import eslint_js from '@eslint/js'
 
-type OptionsConfig = Parameters<typeof antfu>[0]
+interface TYKConfig {
+    ts?: boolean
+    vue?: boolean
+    ignores?: string[]
+    plugins?: ESLint.Plugin[]
+    rules?: Linter.RulesRecord
+}
 
-export function tyk_eslint(options?: OptionsConfig): OptionsConfig {
-    const defaultOptions: OptionsConfig = {
-        stylistic: {
-            indent: 4,
-            overrides: {
-                'array-element-newline': ['warn', 'consistent'],
-                'comma-dangle': ['warn', {
-                    arrays: 'always-multiline',
-                    objects: 'always-multiline',
-                    imports: 'always-multiline',
-                    exports: 'always-multiline',
-                    functions: 'always-multiline',
-                }],
-                'comma-spacing': 'warn',
-                'comma-style': 'warn',
-                'computed-property-spacing': ['warn', 'never'],
-                'eol-last': ['warn', 'always'],
-                'func-call-spacing': ['warn', 'never'],
-                'indent': ['warn', 4, {
-                    SwitchCase: 1,
-                    VariableDeclarator: 1,
-                    outerIIFEBody: 1,
-                }],
-                'implicit-arrow-linebreak': ['warn', 'beside'],
-                'key-spacing': ['warn', { beforeColon: false, afterColon: true }],
-                'keyword-spacing': ['warn', { after: true }],
-                'lines-between-class-members': ['warn', 'always', { exceptAfterSingleLine: true }],
-                'new-cap': ['warn', { newIsCap: true }],
-                'no-lonely-if': 'warn',
-                'no-multiple-empty-lines': ['warn', { max: 1 }],
-                'no-negated-condition': 'warn',
-                'no-trailing-spaces': 'warn',
-                'no-unneeded-ternary': 'warn',
-                'no-whitespace-before-property': 'warn',
-                'nonblock-statement-body-position': ['warn', 'beside'],
-                'object-curly-newline': ['warn', { multiline: true, consistent: true }],
-                'object-curly-spacing': ['warn', 'always'],
-                'object-property-newline': ['warn', { allowAllPropertiesOnSameLine: true }],
-                'operator-linebreak': ['warn', 'before'],
-                'padded-blocks': ['warn', 'never'],
-                'quotes': ['warn', 'single', { avoidEscape: true }],
-                'semi': ['warn', 'never'],
-                'space-before-blocks': ['warn', 'always'],
-                'space-before-function-paren': ['warn', {
-                    anonymous: 'always',
-                    named: 'never',
-                    asyncArrow: 'always',
-                }],
-                'space-in-parens': ['warn', 'never'],
-                'space-infix-ops': 'warn',
-                'space-unary-ops': 'warn',
-                'spaced-comment': ['warn', 'always'],
-                'switch-colon-spacing': ['warn', { after: true, before: false }],
-                'template-tag-spacing': ['warn', 'never'],
-            },
+export default async function(tyk_config?: TYKConfig) {
+    const eslint_config: Linter.FlatConfig[] = []
 
-        },
-        rules: {
-            // off
-            'curly': 'off',
-            'no-throw-literal': 'off',
-            'import/no-mutable-exports': 'off',
-            'prefer-promise-reject-errors': 'off',
-            'arrow-parens': 'off',
-            'no-new-function': 'off',
+    const stylistic_rules = Object.entries(stylistic_base).reduce((rules, [key, value]) => {
+        rules[`@stylistic/${key}`] = value as Linter.RuleEntry
 
-            'ts/ban-types': 'off',
+        return rules
+    }, {} as Linter.RulesRecord)
 
-            // error
-            'no-extra-parens': 'error',
+    eslint_config.push({
+        ignores: [
+            'dist/**',
+            'node_modules/**',
+            ...tyk_config?.ignores || [],
+        ],
+    })
 
-            // best practices
-            'accessor-pairs': 'warn',
-            'no-empty-function': 'warn',
-            'require-await': 'warn',
+    eslint_config.push(eslint_js.configs.recommended)
 
-            // variables
-            'no-use-before-define': 'error',
-            'camelcase': 'off',
-
-            // cmj
-            'no-new-require': 'error',
-            'arrow-spacing': ['warn', { before: true, after: true }],
-            'no-var': 'warn',
-            'prefer-const': ['warn', {
-                destructuring: 'all',
-                ignoreReadBeforeAssign: true,
-            }],
-            'rest-spread-spacing': ['warn', 'never'],
-
-        },
-        ignores: [],
+    eslint_config.push({
+        plugins: { '@stylistic': stylistic as ESLint.Plugin },
+        rules: stylistic_rules,
+    })
+    
+    if (tyk_config?.ts) {
+        await import('typescript-eslint').then(ts_eslint => {
+            eslint_config.push(...ts_eslint.configs.recommended as Linter.FlatConfig[])
+        })
     }
-    return Object.assign(defaultOptions, options)
+
+    if (tyk_config?.vue) {
+
+        await import('eslint-plugin-vue').then(vue_eslint => {
+            eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.FlatConfig[])
+        })
+    }
+
+    return eslint_config
 }
