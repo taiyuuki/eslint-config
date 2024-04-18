@@ -23,7 +23,7 @@ const stylistic_base = {
     'no-extra-parens': ['warn', 'all'],
     'no-extra-semi': ['warn'],
     'no-mixed-spaces-and-tabs': ['warn'],
-    'no-multi-spaces': ['warn', { ignoreEOLComments: true }],
+    'no-multi-spaces': ['warn'],
     'no-multiple-empty-lines': ['warn', { max: 1 }],
     'no-tabs': ['warn'],
     'no-whitespace-before-property': ['warn'],

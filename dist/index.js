@@ -26,7 +26,7 @@ const stylistic_base = {
     'no-extra-parens': ['warn', 'all'],
     'no-extra-semi': ['warn'],
     'no-mixed-spaces-and-tabs': ['warn'],
-    'no-multi-spaces': ['warn', { ignoreEOLComments: true }],
+    'no-multi-spaces': ['warn'],
     'no-multiple-empty-lines': ['warn', { max: 1 }],
     'no-tabs': ['warn'],
     'no-whitespace-before-property': ['warn'],
@@ -58,6 +58,118 @@ const stylistic_base = {
     'type-named-tuple-spacing': ['warn'],
 };
 
+var vue_rules = {
+    "vue/array-bracket-newline": [
+        "warn",
+        "consistent"
+    ],
+    "vue/array-bracket-spacing": [
+        "warn",
+        "never"
+    ],
+    "vue/array-element-newline": [
+        "warn",
+        "consistent"
+    ],
+    "vue/arrow-spacing": [
+        "warn",
+        {
+            "before": true,
+            "after": true
+        }
+    ],
+    "vue/block-spacing": [
+        "warn",
+        "always"
+    ],
+    "vue/brace-style": [
+        "warn",
+        "1tbs",
+        {
+            "allowSingleLine": true
+        }
+    ],
+    "vue/comma-dangle": [
+        "warn",
+        "always-multiline"
+    ],
+    "vue/comma-spacing": [
+        "warn",
+        {
+            "before": false,
+            "after": true
+        }
+    ],
+    "vue/comma-style": [
+        "warn",
+        "last"
+    ],
+    "vue/dot-location": [
+        "warn",
+        "property"
+    ],
+    "vue/func-call-spacing": [
+        "warn",
+        "never"
+    ],
+    "vue/key-spacing": [
+        "warn",
+        {
+            "beforeColon": false,
+            "afterColon": true
+        }
+    ],
+    "vue/no-extra-parens": [
+        "warn",
+        "all"
+    ],
+    "vue/no-multi-spaces": [
+        "warn"
+    ],
+    "vue/object-curly-newline": [
+        "warn",
+        {
+            "multiline": true
+        }
+    ],
+    "vue/object-curly-spacing": [
+        "warn",
+        "always"
+    ],
+    "vue/object-property-newline": [
+        "warn",
+        {
+            "allowAllPropertiesOnSameLine": true
+        }
+    ],
+    "vue/operator-linebreak": [
+        "warn",
+        "before"
+    ],
+    "vue/quote-props": [
+        "warn",
+        "consistent-as-needed"
+    ],
+    "vue/space-in-parens": [
+        "warn",
+        "never"
+    ],
+    "vue/space-infix-ops": [
+        "warn"
+    ],
+    "vue/space-unary-ops": [
+        "warn",
+        {
+            "words": true,
+            "nonwords": false
+        }
+    ],
+    "vue/template-curly-spacing": [
+        "warn",
+        "never"
+    ]
+};
+
 async function index (tyk_config) {
     const eslint_config = [];
     const stylistic_rules = Object.entries(stylistic_base).reduce((rules, [key, value]) => {
@@ -82,11 +194,9 @@ async function index (tyk_config) {
         });
     }
     if (tyk_config?.vue) {
-        // await import('vue-eslint-parser').then(vue_parser => {
-        //     eslint_config.push({ languageOptions: { parser: vue_parser.default } })
-        // })
         await import('eslint-plugin-vue').then(vue_eslint => {
             eslint_config.push(...vue_eslint.default.configs['flat/recommended']);
+            eslint_config.push({ rules: vue_rules });
         });
     }
     return eslint_config;

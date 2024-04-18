@@ -2,6 +2,7 @@ import type { ESLint, Linter } from 'eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import { stylistic_base } from './base'
 import eslint_js from '@eslint/js'
+import vue_rules from './vue-rules'
 
 interface TYKConfig {
     ts?: boolean
@@ -45,6 +46,7 @@ export default async function(tyk_config?: TYKConfig) {
 
         await import('eslint-plugin-vue').then(vue_eslint => {
             eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.FlatConfig[])
+            eslint_config.push({ rules: vue_rules })
         })
     }
 
