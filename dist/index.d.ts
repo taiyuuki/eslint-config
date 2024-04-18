@@ -3,6 +3,8 @@ import { Linter, ESLint } from 'eslint';
 interface TYKConfig {
     ts?: boolean;
     vue?: boolean;
+    json?: boolean;
+    markdown?: boolean;
     ignores?: string[];
     plugins?: ESLint.Plugin[];
     rules?: Linter.RulesRecord;

@@ -9,10 +9,15 @@ pnpm i @taiyuuki/eslint-config -D
 import tyk_config from '@taiyuuki/eslint-config'
 
 export default tyk_config({
-    ts: true
-    vue: true
-    ignores: [
-        'lib/**'
-    ]
+    ts: true, // default false
+    vue: true, // default false
+    json: false, // default true
+    markdown: false, // default true
+    ignores: ['.config/**'],
+    rules: {
+        
+        // custom rules
+        curly: ['error'],
+    },
 })
 ```

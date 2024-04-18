@@ -171,33 +171,54 @@ var vue_rules = {
 };
 
 async function index (tyk_config) {
+    const config = Object.assign({ jsdoc: true, json: true, markdown: true }, tyk_config);
     const eslint_config = [];
+    // ignores
+    eslint_config.push({
+        ignores: [
+            '**/dist/**',
+            ...config?.ignores || [],
+        ],
+    });
+    // stylistic
     const stylistic_rules = Object.entries(stylistic_base).reduce((rules, [key, value]) => {
         rules[`@stylistic/${key}`] = value;
         return rules;
     }, {});
     eslint_config.push({
-        ignores: [
-            'dist/**',
-            'node_modules/**',
-            ...tyk_config?.ignores || [],
-        ],
-    });
-    eslint_config.push(eslint_js.configs.recommended);
-    eslint_config.push({
         plugins: { '@stylistic': stylistic },
         rules: stylistic_rules,
     });
-    if (tyk_config?.ts) {
-        await import('typescript-eslint').then(ts_eslint => {
-            eslint_config.push(...ts_eslint.configs.recommended);
+    // js
+    eslint_config.push(eslint_js.configs.recommended);
+    // json
+    if (config?.json) {
+        await import('eslint-plugin-jsonc').then(json_eslint => {
+            eslint_config.push(...json_eslint.default.configs['flat/recommended-with-json']);
         });
     }
-    if (tyk_config?.vue) {
+    // markdown
+    if (config?.markdown) {
+        await import('eslint-plugin-markdown').then(markdown_eslint => {
+            eslint_config.push(...markdown_eslint.default.configs['recommended']);
+        });
+    }
+    // ts
+    if (config?.ts) {
+        await import('typescript-eslint').then(ts_eslint => {
+            eslint_config.push(...ts_eslint.default.configs.recommended);
+        });
+    }
+    // vue
+    if (config?.vue) {
         await import('eslint-plugin-vue').then(vue_eslint => {
             eslint_config.push(...vue_eslint.default.configs['flat/recommended']);
             eslint_config.push({ rules: vue_rules });
         });
+    }
+    // external rules
+    if (config?.rules) {
+        eslint_config.push({ rules: config.rules });
     }
     return eslint_config;
 }
