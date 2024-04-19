@@ -33,3 +33,13 @@ declare module 'eslint-plugin-markdown' {
     }
     export default eslint_plugin_markdown
 }
+
+declare module 'eslint-plugin-import' {
+    import type { Linter } from 'eslint'
+    const eslint_plugin_import: {
+        configs: {
+            recommended: Linter.FlatConfig<Linter.RulesRecord>;
+        }
+    }
+    export default eslint_plugin_import
+}

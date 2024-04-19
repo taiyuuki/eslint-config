@@ -1,11 +1,13 @@
 import type { ESLint, Linter } from 'eslint'
-import base_rules from './base-rules'
 import eslint_js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
+import import_eslint from 'eslint-plugin-import'
+import base_rules from './base-rules'
 import { stylistic_base } from './stylistic'
 import ts_rules from './ts-rules'
 import vue_stylistic from './vue/stylistic'
 import vue_rules from './vue/rules'
+import import_rules from './imports'
 
 interface TYKConfig {
     ts?: boolean
@@ -46,6 +48,12 @@ export default async function(tyk_config?: TYKConfig) {
     // js
     eslint_config.push(eslint_js.configs.recommended)
     eslint_config.push({ rules: base_rules })
+
+    // import
+    eslint_config.push({
+        plugins: { import: import_eslint as ESLint.Plugin },
+        rules: import_rules,
+    })
 
     // markdown
     if (config?.markdown) {

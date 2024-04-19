@@ -1,6 +1,6 @@
+import fs from 'fs'
 import type { Linter } from 'eslint'
 import fg from 'fast-glob'
-import fs from 'fs'
 import { stylistic_base } from '../src/stylistic'
 
 function key_in<T extends object>(key: number | string | symbol, obj: T): key is keyof T {
