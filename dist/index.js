@@ -202,11 +202,15 @@ async function index (tyk_config) {
     // ignores
     eslint_config.push({
         ignores: [
+<<<<<<< HEAD
             '**/dist',
             '**/node_modules',
             '**/package-lock.json',
             '**/yarn.lock',
             '**/pnpm-lock.yaml',
+=======
+            '**/dist/**',
+>>>>>>> 2647c0554b05eece9a0fd6e6af9186d54af3ab2e
             ...config?.ignores || [],
         ],
     });
@@ -221,6 +225,7 @@ async function index (tyk_config) {
     });
     // js
     eslint_config.push(eslint_js.configs.recommended);
+<<<<<<< HEAD
     eslint_config.push({ rules: base_rules });
     // markdown
     if (config?.markdown) {
@@ -228,11 +233,28 @@ async function index (tyk_config) {
             eslint_config.push(...markdown_eslint.default.configs['recommended']);
         });
     }
+=======
+    // json
+    if (config?.json) {
+        await import('eslint-plugin-jsonc').then(json_eslint => {
+            eslint_config.push(...json_eslint.default.configs['flat/recommended-with-json']);
+        });
+    }
+    // markdown
+    if (config?.markdown) {
+        await import('eslint-plugin-markdown').then(markdown_eslint => {
+            eslint_config.push(...markdown_eslint.default.configs['recommended']);
+        });
+    }
+>>>>>>> 2647c0554b05eece9a0fd6e6af9186d54af3ab2e
     // ts
     if (config?.ts) {
         await import('typescript-eslint').then(ts_eslint => {
             eslint_config.push(...ts_eslint.default.configs.recommended);
+<<<<<<< HEAD
             eslint_config.push({ rules: ts_rules });
+=======
+>>>>>>> 2647c0554b05eece9a0fd6e6af9186d54af3ab2e
         });
     }
     // vue
