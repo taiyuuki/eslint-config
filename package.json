@@ -1,6 +1,6 @@
 {
   "name": "@taiyuuki/eslint-config",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,10 +29,10 @@
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "eslint-plugin-markdown": "^4.0.1",
     "eslint-plugin-vue": "^9.25.0",
-    "typescript-eslint": "^7.7.0"
+    "typescript-eslint": "^7.7.0",
+    "vue-eslint-parser": "^9.4.2"
   },
   "devDependencies": {
-    "@eslint/config-inspector": "^0.4.6",
     "@taiyuuki/eslint-config": "link:.",
     "@types/node": "^20.12.7",
     "eslint": "^9.0.0",

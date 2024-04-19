@@ -18,7 +18,12 @@ const stylistic_base = {
     'indent': ['warn', 4],
     'key-spacing': ['warn', { beforeColon: false, afterColon: true }],
     'lines-around-comment': ['warn', { beforeBlockComment: true, beforeLineComment: true }],
-    'lines-between-class-members': ['warn', 'always', { exceptAfterOverload: false }],
+    'lines-between-class-members': ['warn', {
+        enforce: [
+            { blankLine: 'always', prev: '*', next: 'method' },
+            { blankLine: 'always', prev: 'method', next: '*' },
+        ],
+    }],
     'newline-per-chained-call': ['warn', { ignoreChainWithDepth: 2 }],
     'no-extra-parens': ['warn', 'all'],
     'no-extra-semi': ['warn'],

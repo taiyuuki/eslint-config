@@ -5,6 +5,7 @@ import stylistic from '@stylistic/eslint-plugin'
 import { stylistic_base } from './stylistic'
 import ts_rules from './ts-rules'
 import vue_rules from './vue-rules'
+import typescriptEslint from 'typescript-eslint'
 
 interface TYKConfig {
     ts?: boolean
@@ -55,18 +56,29 @@ export default async function(tyk_config?: TYKConfig) {
     
     // ts
     if (config?.ts) {
-        await import('typescript-eslint').then(ts_eslint => {
-            eslint_config.push(...ts_eslint.default.configs.recommended as Linter.FlatConfig[])
-            eslint_config.push({ rules: ts_rules })
-        })
+        eslint_config.push(...typescriptEslint.configs.recommended as Linter.FlatConfig[])
+        eslint_config.push({ rules: ts_rules })
     }
 
     // vue
     if (config?.vue) {
         await import('eslint-plugin-vue').then(vue_eslint => {
             eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.FlatConfig[])
-            eslint_config.push({ rules: vue_rules })
         })
+        
+        await import('vue-eslint-parser').then(vue_parser => {
+            eslint_config.push({ 
+                files: ['*.vue'],
+                languageOptions: {
+                    parser: vue_parser.default,
+                    parserOptions: {
+                        sourceType: 'module',
+                        parser: { ts: typescriptEslint.parser },
+                    },
+                },
+            })
+        })
+        eslint_config.push({ rules: vue_rules })
     }
 
     // external rules
