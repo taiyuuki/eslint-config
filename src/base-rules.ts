@@ -1,6 +1,8 @@
 import type { Linter } from 'eslint'
 
 export default {
+    'array-callback-return': ['error'],
+    'dot-notation': ['error'],
     'sort-imports': ['error', {
         allowSeparatedGroups: false,
         ignoreCase: false,
@@ -18,4 +20,5 @@ export default {
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-implied-eval': ['error'],
     'eqeqeq': ['error', 'always'],
+    'default-case-last': ['error'],
 } as Linter.RulesRecord

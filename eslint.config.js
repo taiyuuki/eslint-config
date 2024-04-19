@@ -5,6 +5,6 @@ export default tyk_eslint({
     vue: true,
     ignores: [
         'dist/**', 
-        'src/vue-rules.ts',
+        'src/vue/stylistic.ts',
     ], 
 })

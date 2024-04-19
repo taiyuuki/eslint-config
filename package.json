@@ -42,5 +42,8 @@
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0"
   }
 }

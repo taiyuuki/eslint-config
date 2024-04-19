@@ -4,8 +4,8 @@ import eslint_js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import { stylistic_base } from './stylistic'
 import ts_rules from './ts-rules'
-import vue_rules from './vue-rules'
-import typescriptEslint from 'typescript-eslint'
+import vue_stylistic from './vue/stylistic'
+import vue_rules from './vue/rules'
 
 interface TYKConfig {
     ts?: boolean
@@ -49,36 +49,38 @@ export default async function(tyk_config?: TYKConfig) {
 
     // markdown
     if (config?.markdown) {
-        await import('eslint-plugin-markdown').then(markdown_eslint => {
-            eslint_config.push(...markdown_eslint.default.configs['recommended'] as Linter.FlatConfig[])
-        })
+        const markdown_eslint = await import('eslint-plugin-markdown')
+        eslint_config.push(...markdown_eslint.default.configs.recommended as Linter.FlatConfig[])
     }
     
     // ts
+    let typescript_eslint
     if (config?.ts) {
-        eslint_config.push(...typescriptEslint.configs.recommended as Linter.FlatConfig[])
+        typescript_eslint = await import('typescript-eslint')
+        eslint_config.push(...typescript_eslint.default.configs.recommended as Linter.FlatConfig[])
         eslint_config.push({ rules: ts_rules })
     }
 
     // vue
     if (config?.vue) {
-        await import('eslint-plugin-vue').then(vue_eslint => {
-            eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.FlatConfig[])
-        })
+        const vue_eslint = await import('eslint-plugin-vue')
+        eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.FlatConfig[])
         
-        await import('vue-eslint-parser').then(vue_parser => {
-            eslint_config.push({ 
-                files: ['*.vue'],
-                languageOptions: {
-                    parser: vue_parser.default,
-                    parserOptions: {
-                        sourceType: 'module',
-                        parser: { ts: typescriptEslint.parser },
-                    },
+        const vue_parser = await import('vue-eslint-parser')
+        if (!typescript_eslint) {
+            typescript_eslint = await import('typescript-eslint')
+        }
+        eslint_config.push({ 
+            files: ['**/*.vue'],
+            languageOptions: {
+                parser: vue_parser.default,
+                parserOptions: {
+                    sourceType: 'module',
+                    parser: { ts: typescript_eslint.default.parser },
                 },
-            })
+            },
         })
-        eslint_config.push({ rules: vue_rules })
+        eslint_config.push({ rules: Object.assign({}, vue_stylistic, vue_rules) })
     }
 
     // external rules
