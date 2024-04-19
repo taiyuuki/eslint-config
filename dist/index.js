@@ -1,5 +1,25 @@
-import stylistic from '@stylistic/eslint-plugin';
 import eslint_js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+
+var base_rules = {
+    'sort-imports': ['error', {
+            allowSeparatedGroups: false,
+            ignoreCase: false,
+            ignoreDeclarationSort: true,
+            ignoreMemberSort: false,
+            memberSyntaxSortOrder: [
+                'none',
+                'all',
+                'multiple',
+                'single',
+            ],
+        }],
+    'prefer-template': ['error'],
+    'no-lonely-if': ['error'],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-implied-eval': ['error'],
+    'eqeqeq': ['error', 'always'],
+};
 
 const stylistic_base = {
     'array-bracket-newline': ['warn', 'consistent'],
@@ -56,6 +76,12 @@ const stylistic_base = {
     'indent-binary-ops': ['warn', 4],
     'type-generic-spacing': ['warn'],
     'type-named-tuple-spacing': ['warn'],
+};
+
+var ts_rules = {
+    '@typescript-eslint/no-import-type-side-effects': ['error'],
+    '@typescript-eslint/sort-type-constituents': ['error'],
+    '@typescript-eslint/consistent-type-imports': ['error'],
 };
 
 var vue_rules = {
@@ -171,33 +197,54 @@ var vue_rules = {
 };
 
 async function index (tyk_config) {
+    const config = Object.assign({ jsdoc: true, json: true, markdown: true }, tyk_config);
     const eslint_config = [];
+    // ignores
+    eslint_config.push({
+        ignores: [
+            '**/dist',
+            '**/node_modules',
+            '**/package-lock.json',
+            '**/yarn.lock',
+            '**/pnpm-lock.yaml',
+            ...config?.ignores || [],
+        ],
+    });
+    // stylistic
     const stylistic_rules = Object.entries(stylistic_base).reduce((rules, [key, value]) => {
         rules[`@stylistic/${key}`] = value;
         return rules;
     }, {});
     eslint_config.push({
-        ignores: [
-            'dist/**',
-            'node_modules/**',
-            ...tyk_config?.ignores || [],
-        ],
-    });
-    eslint_config.push(eslint_js.configs.recommended);
-    eslint_config.push({
         plugins: { '@stylistic': stylistic },
         rules: stylistic_rules,
     });
-    if (tyk_config?.ts) {
-        await import('typescript-eslint').then(ts_eslint => {
-            eslint_config.push(...ts_eslint.configs.recommended);
+    // js
+    eslint_config.push(eslint_js.configs.recommended);
+    eslint_config.push({ rules: base_rules });
+    // markdown
+    if (config?.markdown) {
+        await import('eslint-plugin-markdown').then(markdown_eslint => {
+            eslint_config.push(...markdown_eslint.default.configs['recommended']);
         });
     }
-    if (tyk_config?.vue) {
+    // ts
+    if (config?.ts) {
+        await import('typescript-eslint').then(ts_eslint => {
+            eslint_config.push(...ts_eslint.default.configs.recommended);
+            eslint_config.push({ rules: ts_rules });
+        });
+    }
+    // vue
+    if (config?.vue) {
         await import('eslint-plugin-vue').then(vue_eslint => {
             eslint_config.push(...vue_eslint.default.configs['flat/recommended']);
             eslint_config.push({ rules: vue_rules });
         });
+    }
+    // external rules
+    if (config?.rules) {
+        eslint_config.push({ rules: config.rules });
     }
     return eslint_config;
 }

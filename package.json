@@ -1,6 +1,6 @@
 {
   "name": "@taiyuuki/eslint-config",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,18 +27,20 @@
     "@eslint/js": "^9.0.0",
     "@stylistic/eslint-plugin": "^1.7.2",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "eslint-plugin-markdown": "^4.0.1",
     "eslint-plugin-vue": "^9.25.0",
     "typescript-eslint": "^7.7.0"
   },
   "devDependencies": {
+    "@eslint/config-inspector": "^0.4.6",
     "@taiyuuki/eslint-config": "link:.",
     "@types/node": "^20.12.7",
     "eslint": "^9.0.0",
     "esno": "^4.7.0",
     "fast-glob": "^3.3.2",
-    "rollup": "^4.10.0",
+    "rollup": "^4.14.3",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-typescript2": "^0.36.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }

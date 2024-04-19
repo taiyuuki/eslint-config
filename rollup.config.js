@@ -1,6 +1,6 @@
 import { defineConfig } from 'rollup'
-import ts from 'rollup-plugin-typescript2'
 import dts from 'rollup-plugin-dts'
+import ts from 'rollup-plugin-typescript2'
 
 const config = defineConfig([
     {
