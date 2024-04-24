@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import type { Linter } from 'eslint'
 import fg from 'fast-glob'
 import { stylistic_base } from '../src/stylistic'

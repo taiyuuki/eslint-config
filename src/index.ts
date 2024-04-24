@@ -2,17 +2,20 @@ import type { ESLint, Linter } from 'eslint'
 import eslint_js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import import_eslint from 'eslint-plugin-import'
-import base_rules from './base-rules'
+import unicorn_eslint from 'eslint-plugin-unicorn'
 import { stylistic_base } from './stylistic'
+import base_rules from './base-rules'
 import ts_rules from './ts-rules'
 import vue_stylistic from './vue/stylistic'
 import vue_rules from './vue/rules'
 import import_rules from './imports'
+import unicorn_rules from './unicorn'
 
 interface TYKConfig {
     ts?: boolean
     vue?: boolean
     markdown?: boolean
+    json?: boolean
     ignores?: string[]
     plugins?: ESLint.Plugin[]
     rules?: Linter.RulesRecord
@@ -43,6 +46,7 @@ export default async function(tyk_config?: TYKConfig) {
     eslint_config.push({
         plugins: { '@stylistic': stylistic as ESLint.Plugin },
         rules: stylistic_rules,
+        ignores: ['**/*.json'],
     })
 
     // js
@@ -55,10 +59,22 @@ export default async function(tyk_config?: TYKConfig) {
         rules: import_rules,
     })
 
+    // unicron
+    eslint_config.push({
+        plugins: { unicorn: unicorn_eslint as ESLint.Plugin },
+        rules: unicorn_rules,
+    })
+
     // markdown
     if (config?.markdown) {
         const markdown_eslint = await import('eslint-plugin-markdown')
         eslint_config.push(...markdown_eslint.default.configs.recommended as Linter.FlatConfig[])
+    }
+
+    // json
+    if (config?.json) {
+        const json_eslint = await import('eslint-plugin-jsonc')
+        eslint_config.push(...json_eslint.default.configs['flat/recommended-with-jsonc'] as Linter.FlatConfig[])
     }
     
     // ts
@@ -66,7 +82,10 @@ export default async function(tyk_config?: TYKConfig) {
     if (config?.ts) {
         typescript_eslint = await import('typescript-eslint')
         eslint_config.push(...typescript_eslint.default.configs.recommended as Linter.FlatConfig[])
-        eslint_config.push({ rules: ts_rules })
+        eslint_config.push({ 
+            files: ['**/*.ts'],
+            rules: ts_rules,
+        })
     }
 
     // vue
@@ -88,10 +107,13 @@ export default async function(tyk_config?: TYKConfig) {
                 },
             },
         })
-        eslint_config.push({ rules: Object.assign({}, vue_stylistic, vue_rules) })
+        eslint_config.push({
+            files: ['**/*.vue'],
+            rules: Object.assign({}, vue_stylistic, vue_rules), 
+        })
     }
 
-    // external rules
+    // additional rules
     if (config?.rules) {
         eslint_config.push({ rules: config.rules })
     }

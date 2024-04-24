@@ -7,7 +7,7 @@ export default {
     'import/no-duplicates': 'error',
     
     // Not yet supported in ESLint v9.0.0
-    // 'import/newline-after-import': 'warn',
+    // 'import/newline-after-import': ['warn', { count: 1 }],
     // 'import/no-mutable-exports': 'error',
     // 'import/no-self-import': 'error',
 } as Linter.RulesRecord

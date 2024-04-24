@@ -12,6 +12,7 @@ export default tyk_config({
     ts: true, // default false
     vue: true, // default false
     markdown: false, // default true
+    json: false, // default true
     ignores: ['.config/**'],
     rules: {
         

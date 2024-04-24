@@ -43,3 +43,13 @@ declare module 'eslint-plugin-import' {
     }
     export default eslint_plugin_import
 }
+
+declare module 'eslint-plugin-unicorn' {
+    import type { Linter } from 'eslint'
+    const eslint_plugin_unicorn: {
+        configs: {
+            recommended: Linter.FlatConfig<Linter.RulesRecord>;
+        }
+    }
+    export default eslint_plugin_unicorn
+}
