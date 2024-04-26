@@ -21,7 +21,7 @@ interface TYKConfig {
     rules?: Linter.RulesRecord
 }
 
-export default async function(tyk_config?: TYKConfig) {
+export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig[]) {
     const config = Object.assign({ jsdoc: true, json: true, markdown: true }, tyk_config)
     const eslint_config: Linter.FlatConfig[] = []
     
@@ -101,6 +101,71 @@ export default async function(tyk_config?: TYKConfig) {
             files: ['**/*.vue'],
             languageOptions: {
                 parser: vue_parser.default,
+                globals: {
+                    $$: 'readonly',
+                    $: 'readonly',
+                    $computed: 'readonly',
+                    $customRef: 'readonly',
+                    $ref: 'readonly',
+                    $shallowRef: 'readonly',
+                    $toRef: 'readonly',
+                    EffectScope: 'readonly',
+                    axios: 'readonly',
+                    computed: 'readonly',
+                    createApp: 'readonly',
+                    customRef: 'readonly',
+                    defineAsyncComponent: 'readonly',
+                    defineComponent: 'readonly',
+                    defineCustomElement: 'readonly',
+                    defineSSRCustomElement: 'readonly',
+                    effectScope: 'readonly',
+                    getCurrentInstance: 'readonly',
+                    getCurrentScope: 'readonly',
+                    h: 'readonly',
+                    inject: 'readonly',
+                    isProxy: 'readonly',
+                    isReactive: 'readonly',
+                    isReadonly: 'readonly',
+                    isRef: 'readonly',
+                    markRaw: 'readonly',
+                    nextTick: 'readonly',
+                    onActivated: 'readonly',
+                    onBeforeMount: 'readonly',
+                    onBeforeUnmount: 'readonly',
+                    onBeforeUpdate: 'readonly',
+                    onDeactivated: 'readonly',
+                    onErrorCaptured: 'readonly',
+                    onMounted: 'readonly',
+                    onRenderTracked: 'readonly',
+                    onRenderTriggered: 'readonly',
+                    onScopeDispose: 'readonly',
+                    onServerPrefetch: 'readonly',
+                    onUnmounted: 'readonly',
+                    onUpdated: 'readonly',
+                    provide: 'readonly',
+                    reactive: 'readonly',
+                    readonly: 'readonly',
+                    ref: 'readonly',
+                    resolveComponent: 'readonly',
+                    shallowReactive: 'readonly',
+                    shallowReadonly: 'readonly',
+                    shallowRef: 'readonly',
+                    toRaw: 'readonly',
+                    toRef: 'readonly',
+                    toRefs: 'readonly',
+                    triggerRef: 'readonly',
+                    unref: 'readonly',
+                    useAttrs: 'readonly',
+                    useCssModule: 'readonly',
+                    useCssVars: 'readonly',
+                    useRoute: 'readonly',
+                    useRouter: 'readonly',
+                    useSlots: 'readonly',
+                    watch: 'readonly',
+                    watchEffect: 'readonly',
+                    watchPostEffect: 'readonly',
+                    watchSyncEffect: 'readonly',
+                },
                 parserOptions: {
                     sourceType: 'module',
                     parser: { ts: typescript_eslint.default.parser },
@@ -116,6 +181,11 @@ export default async function(tyk_config?: TYKConfig) {
     // additional rules
     if (config?.rules) {
         eslint_config.push({ rules: config.rules })
+    }
+
+    // additional configs
+    if (rest.length > 0) {
+        eslint_config.push(...rest)
     }
 
     return eslint_config
