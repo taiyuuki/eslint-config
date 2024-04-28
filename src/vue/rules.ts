@@ -9,6 +9,6 @@ export default {
         useSlots: 'slots',
         useAttrs: 'attrs',
     }],
-    'vue/block-order': ['error', ['script', 'template', 'style']],
+    'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
     'vue/block-tag-newline': ['error'],
 } as Linter.RulesRecord
