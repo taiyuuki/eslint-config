@@ -11,4 +11,5 @@ export default {
     }],
     'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
     'vue/block-tag-newline': ['error'],
+    'vue/multi-word-component-names': 'off',
 } as Linter.RulesRecord

@@ -1,6 +1,6 @@
 {
   "name": "@taiyuuki/eslint-config",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -51,5 +51,12 @@
   },
   "peerDependencies": {
     "eslint": ">=8.23.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint": "9"
+      }
+    }
   }
 }
