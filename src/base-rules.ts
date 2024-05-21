@@ -15,6 +15,7 @@ export default {
             'single',
         ],
     }],
+    'prefer-const': ['error', { destructuring: 'all' }],
     'prefer-template': ['error'],
     'no-lonely-if': ['error'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
