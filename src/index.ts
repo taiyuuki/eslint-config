@@ -137,6 +137,8 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
                     onRenderTriggered: 'readonly',
                     onScopeDispose: 'readonly',
                     onServerPrefetch: 'readonly',
+                    onBeforeRouteUpdate: 'readonly',
+                    onBeforeRouteLeave: 'readonly',
                     onUnmounted: 'readonly',
                     onUpdated: 'readonly',
                     provide: 'readonly',
