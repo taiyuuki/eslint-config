@@ -12,6 +12,7 @@ import import_rules from './imports'
 import unicorn_rules from './unicorn'
 
 interface TYKConfig {
+    indent?: number
     ts?: boolean
     vue?: boolean
     markdown?: boolean
@@ -43,6 +44,9 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
 
         return rules
     }, {} as Linter.RulesRecord)
+    if (config.indent) {
+        stylistic_rules['@stylistic/indent'] = ['warn', config.indent]
+    }
     eslint_config.push({
         plugins: { '@stylistic': stylistic as ESLint.Plugin },
         rules: stylistic_rules,
