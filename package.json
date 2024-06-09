@@ -1,6 +1,6 @@
 {
   "name": "@taiyuuki/eslint-config",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,22 +26,22 @@
   "author": "taiyuuki <taiyuuki@qq.com>",
   "license": "MIT",
   "dependencies": {
-    "@eslint/js": "^9.3.0",
+    "@eslint/js": "^9.4.0",
     "@stylistic/eslint-plugin": "^1.8.1",
-    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsonc": "^2.15.1",
+    "eslint-plugin-jsonc": "^2.16.0",
     "eslint-plugin-markdown": "^4.0.1",
     "eslint-plugin-unicorn": "^52.0.0",
     "eslint-plugin-vue": "^9.26.0",
-    "typescript-eslint": "^7.10.0",
-    "vue-eslint-parser": "^9.4.2"
+    "typescript-eslint": "^7.12.0",
+    "vue-eslint-parser": "^9.4.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.8",
     "@taiyuuki/eslint-config": "link:.",
-    "@types/node": "^20.12.12",
-    "eslint": "^9.3.0",
+    "@types/node": "^20.14.2",
+    "eslint": "^9.4.0",
     "esno": "^4.7.0",
     "fast-glob": "^3.3.2",
     "rollup": "^4.18.0",
