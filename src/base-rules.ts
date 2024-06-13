@@ -20,6 +20,6 @@ export default {
     'no-lonely-if': ['error'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-implied-eval': ['error'],
-    'eqeqeq': ['error', 'always'],
+    'eqeqeq': ['error', 'always', { null: 'ignore' }],
     'default-case-last': ['error'],
 } as Linter.RulesRecord
