@@ -3,6 +3,7 @@ import eslint_js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import import_eslint from 'eslint-plugin-import'
 import unicorn_eslint from 'eslint-plugin-unicorn'
+import { fixupPluginRules } from '@eslint/compat'
 import { stylistic_base } from './stylistic'
 import base_rules from './base-rules'
 import ts_rules from './ts-rules'
@@ -58,8 +59,9 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
     eslint_config.push({ rules: base_rules })
 
     // import
+    // TODO: remove the fixupPluginRules when the plugin is supported for eslint v9
     eslint_config.push({
-        plugins: { import: import_eslint as ESLint.Plugin },
+        plugins: { import: fixupPluginRules(import_eslint) as ESLint.Plugin },
         rules: import_rules,
     })
 

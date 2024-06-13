@@ -1,6 +1,7 @@
 
 declare module 'eslint-plugin-vue' {
     import type { Linter } from 'eslint'
+
     const eslint_plugin_vue: {
         configs: {
             'flat/recommended': Linter.FlatConfig<Linter.RulesRecord>;
@@ -16,6 +17,7 @@ declare module 'eslint-plugin-vue' {
 
 declare module '@eslint/js' {
     import type { Linter } from 'eslint'
+
     const eslint: {
         configs: {
             recommended: Linter.FlatConfig<Linter.RulesRecord>;
@@ -26,6 +28,7 @@ declare module '@eslint/js' {
 
 declare module 'eslint-plugin-markdown' {
     import type { Linter } from 'eslint'
+
     const eslint_plugin_markdown: {
         configs: {
             recommended: Linter.FlatConfig<Linter.RulesRecord>;
@@ -36,6 +39,7 @@ declare module 'eslint-plugin-markdown' {
 
 declare module 'eslint-plugin-import' {
     import type { Linter } from 'eslint'
+
     const eslint_plugin_import: {
         configs: {
             recommended: Linter.FlatConfig<Linter.RulesRecord>;
@@ -46,6 +50,7 @@ declare module 'eslint-plugin-import' {
 
 declare module 'eslint-plugin-unicorn' {
     import type { Linter } from 'eslint'
+
     const eslint_plugin_unicorn: {
         configs: {
             recommended: Linter.FlatConfig<Linter.RulesRecord>;
