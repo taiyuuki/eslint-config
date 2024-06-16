@@ -5,7 +5,7 @@ const stylistic_base = {
     'arrow-parens': ['warn', 'as-needed'],
     'arrow-spacing': ['warn', { before: true, after: true }],
     'block-spacing': ['warn', 'always'],
-    'brace-style': ['warn', '1tbs', { allowSingleLine: true }],
+    'brace-style': ['warn', 'stroustrup', { allowSingleLine: true }],
     'comma-dangle': ['warn', 'always-multiline'],
     'comma-spacing': ['warn', { before: false, after: true }],
     'comma-style': ['warn', 'last'],
