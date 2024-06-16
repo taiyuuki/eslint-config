@@ -173,8 +173,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
                 },
                 parserOptions: {
                     sourceType: 'module',
-                    parser: { ts: typescript_eslint.default.parser },
-                    project: './tsconfig.json',
+                    parser: typescript_eslint.default.parser,
                 },
             },
         })
