@@ -26,7 +26,7 @@ export default {
     ],
     "vue/brace-style": [
         "warn",
-        "1tbs",
+        "stroustrup",
         {
             "allowSingleLine": true
         }

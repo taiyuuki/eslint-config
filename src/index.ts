@@ -86,9 +86,20 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
     // ts
     let typescript_eslint
     if (config?.ts) {
+
         typescript_eslint = await import('typescript-eslint')
-        eslint_config.push(...typescript_eslint.default.configs.recommended as Linter.FlatConfig[])
-        eslint_config.push({ rules: ts_rules })
+        const files = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts']
+        eslint_config.push(...typescript_eslint.default.configs.recommended.map(config => {
+            return {
+                files,
+                ...config,
+            }
+        }) as Linter.FlatConfig[])
+
+        eslint_config.push({ 
+            files,
+            rules: ts_rules,
+        })
     }
 
     // vue
