@@ -20,7 +20,8 @@
     "build": "rollup -c",
     "debug": "eslint --debug",
     "inspector": "eslint --inspect-config",
-    "gen vue-rules": "esno scripts/gen-vue-rules.ts"
+    "gen vue-rules": "esno scripts/gen-vue-rules.ts",
+    "publish": "pnpm publish --access public --registry https://registry.npmjs.org"
   },
   "keywords": [],
   "author": "taiyuuki <taiyuuki@qq.com>",
