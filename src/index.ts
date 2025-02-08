@@ -23,9 +23,9 @@ interface TYKConfig {
     rules?: Linter.RulesRecord
 }
 
-export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig[]) {
+export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) {
     const config = Object.assign({ jsdoc: true, json: true, markdown: true }, tyk_config)
-    const eslint_config: Linter.FlatConfig[] = []
+    const eslint_config: Linter.Config[] = []
     
     // ignores
     eslint_config.push({
@@ -74,13 +74,13 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
     // markdown
     if (config?.markdown) {
         const markdown_eslint = await import('eslint-plugin-markdown')
-        eslint_config.push(...markdown_eslint.default.configs.recommended as Linter.FlatConfig[])
+        eslint_config.push(...markdown_eslint.default.configs.recommended as Linter.Config[])
     }
 
     // json
     if (config?.json) {
         const json_eslint = await import('eslint-plugin-jsonc')
-        eslint_config.push(...json_eslint.default.configs['flat/recommended-with-jsonc'] as Linter.FlatConfig[])
+        eslint_config.push(...json_eslint.default.configs['flat/recommended-with-jsonc'] as Linter.Config[])
     }
     
     // ts
@@ -89,12 +89,10 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
 
         typescript_eslint = await import('typescript-eslint')
         const files = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts']
-        eslint_config.push(...typescript_eslint.default.configs.recommended.map(config => {
-            return {
-                files,
-                ...config,
-            }
-        }) as Linter.FlatConfig[])
+        eslint_config.push(...typescript_eslint.default.configs.recommended.map((config: any) => ({
+            files,
+            ...config,
+        })))
 
         eslint_config.push({ 
             files,
@@ -105,7 +103,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.FlatConfig
     // vue
     if (config?.vue) {
         const vue_eslint = await import('eslint-plugin-vue')
-        eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.FlatConfig[])
+        eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.Config[])
         
         const vue_parser = await import('vue-eslint-parser')
         if (!typescript_eslint) {
