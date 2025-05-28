@@ -61,8 +61,6 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     // import
     eslint_config.push({
         plugins: { import: import_eslint as ESLint.Plugin },
-
-        // plugins: { import: fixupPluginRules(import_eslint) as ESLint.Plugin },
         rules: import_rules,
     })
 
@@ -90,10 +88,13 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
 
         typescript_eslint = await import('typescript-eslint')
         const files = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts']
-        eslint_config.push(...typescript_eslint.default.configs.recommended.map((config: any) => ({
-            files,
-            ...config,
-        })))
+        const recommendedConfigs = typescript_eslint.default.configs.recommended as Linter.Config[]
+        recommendedConfigs.forEach(config => {
+            eslint_config.push({
+                files,
+                ...config,
+            })
+        })
 
         eslint_config.push({ 
             files,
