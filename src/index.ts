@@ -54,6 +54,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     if (config?.jsx) {
         const { default: jsx_eslint } = await import('eslint-plugin-react')
         eslint_config.push(jsx_eslint.configs.flat.recommended)
+        eslint_config.push({ settings: { react: { version: config.reactVersion || 'detect' } } })
     }
 
     // unicron
