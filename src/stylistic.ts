@@ -12,7 +12,7 @@ const stylistic_base = {
     'computed-property-spacing': ['warn', 'never'],
     'dot-location': ['warn', 'property'],
     'eol-last': ['warn', 'always'],
-    'func-call-spacing': ['warn', 'never'],
+    'function-call-spacing': ['warn', 'never'],
     'function-call-argument-newline': ['warn', 'consistent'],
     'function-paren-newline': ['warn', 'multiline'],
     'indent': ['warn', 4],
