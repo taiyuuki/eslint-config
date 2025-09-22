@@ -40,22 +40,6 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
         ],
     })
 
-    // stylistic
-    const stylistic_rules = Object.entries(stylistic_base).reduce((rules, [key, value]) => {
-        rules[`@stylistic/${key}`] = value as Linter.RuleEntry
-
-        return rules
-    }, {} as Linter.RulesRecord)
-    if (config.indent) {
-        stylistic_rules['@stylistic/indent'] = ['warn', config.indent]
-    }
-    eslint_config.push({
-        files: ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md}'],
-        plugins: { '@stylistic': stylistic as ESLint.Plugin },
-        rules: stylistic_rules,
-        ignores: ['**/*.json'],
-    })
-
     // js
     eslint_config.push(eslint_js.configs.recommended)
     eslint_config.push({ rules: base_rules })
@@ -70,16 +54,6 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     if (config?.jsx) {
         const { default: jsx_eslint } = await import('eslint-plugin-react')
         eslint_config.push(jsx_eslint.configs.flat.recommended)
-        const { default: jsx_stylistic_eslint } = await import('@stylistic/eslint-plugin-jsx')
-        eslint_config.push({
-            files: ['**/*.jsx', '**/*.tsx'],
-            plugins: { '@stylistic/jsx': jsx_stylistic_eslint },
-            rules: {
-                '@stylistic/jsx/jsx-indent-props': ['warn', 4],
-                '@stylistic/jsx/jsx-tag-spacing': ['warn', { beforeSelfClosing: 'always' }],
-            },
-            settings: { react: { version: config?.reactVersion || 'detect' } },
-        })
     }
 
     // unicron
@@ -211,6 +185,22 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
             rules: Object.assign({}, vue_stylistic, vue_rules), 
         })
     }
+
+    // stylistic
+    const stylistic_rules = Object.entries(stylistic_base).reduce((rules, [key, value]) => {
+        rules[`@stylistic/${key}`] = value as Linter.RuleEntry
+
+        return rules
+    }, {} as Linter.RulesRecord)
+    if (config.indent) {
+        stylistic_rules['@stylistic/indent'] = ['warn', config.indent]
+    }
+    eslint_config.push({
+        files: ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md}'],
+        plugins: { '@stylistic': stylistic as ESLint.Plugin },
+        rules: stylistic_rules,
+        ignores: ['**/*.json'],
+    })
 
     // additional rules
     if (config?.rules) {
