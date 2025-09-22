@@ -15,6 +15,8 @@ interface TYKConfig {
     indent?: number
     ts?: boolean
     vue?: boolean
+    jsx?: boolean
+    reactVersion?: string | 'detect'
     markdown?: boolean
     json?: boolean
     ignores?: string[]
@@ -48,7 +50,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
         stylistic_rules['@stylistic/indent'] = ['warn', config.indent]
     }
     eslint_config.push({
-        files: ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md,jsonc,json}'],
+        files: ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md}'],
         plugins: { '@stylistic': stylistic as ESLint.Plugin },
         rules: stylistic_rules,
         ignores: ['**/*.json'],
@@ -63,6 +65,22 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
         plugins: { import: import_eslint as ESLint.Plugin },
         rules: import_rules,
     })
+
+    // jsx
+    if (config?.jsx) {
+        const { default: jsx_eslint } = await import('eslint-plugin-react')
+        eslint_config.push(jsx_eslint.configs.flat.recommended)
+        const { default: jsx_stylistic_eslint } = await import('@stylistic/eslint-plugin-jsx')
+        eslint_config.push({
+            files: ['**/*.jsx', '**/*.tsx'],
+            plugins: { '@stylistic/jsx': jsx_stylistic_eslint },
+            rules: {
+                '@stylistic/jsx/jsx-indent-props': ['warn', 4],
+                '@stylistic/jsx/jsx-tag-spacing': ['warn', { beforeSelfClosing: 'always' }],
+            },
+            settings: { react: { version: config?.reactVersion || 'detect' } },
+        })
+    }
 
     // unicron
     eslint_config.push({

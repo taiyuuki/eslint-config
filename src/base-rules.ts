@@ -23,4 +23,5 @@ export default {
     'eqeqeq': ['error', 'always', { null: 'ignore' }],
     'default-case-last': ['error'],
     'no-case-declarations': 'off',
+    'no-undef': 'off',
 } as Linter.RulesRecord

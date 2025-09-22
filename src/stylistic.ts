@@ -1,7 +1,7 @@
 const stylistic_base = {
     'array-bracket-newline': ['warn', 'consistent'],
     'array-bracket-spacing': ['warn', 'never'],
-    'array-element-newline': ['warn', 'consistent'],
+    'array-element-newline': 'off',
     'arrow-parens': ['warn', 'as-needed'],
     'arrow-spacing': ['warn', { before: true, after: true }],
     'block-spacing': ['warn', 'always'],

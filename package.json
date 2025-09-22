@@ -1,6 +1,6 @@
 {
   "name": "@taiyuuki/eslint-config",
-  "version": "1.4.20",
+  "version": "1.5.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,6 +33,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsonc": "^2.19.1",
     "eslint-plugin-markdown": "^5.1.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-unicorn": "^59.0.1",
     "eslint-plugin-vue": "^10.1.0",
     "typescript-eslint": "^8.33.0",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.3",
+    "@stylistic/eslint-plugin-jsx": "^4.4.1",
     "@taiyuuki/eslint-config": "link:.",
     "@types/node": "^22.15.23",
     "eslint": "^9.27.0",
