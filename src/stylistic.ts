@@ -54,7 +54,7 @@ const stylistic_base = {
     'switch-colon-spacing': ['warn', { after: true, before: false }],
     'template-curly-spacing': ['warn', 'never'],
     'template-tag-spacing': ['warn', 'never'],
-    'type-annotation-spacing': ['warn', { before: false, after: true }],
+    'type-annotation-spacing': ['warn', { before: false, after: true, overrides: { arrow: { before: true, after: true } } }],
     'indent-binary-ops': ['warn', 4],
     'type-generic-spacing': ['warn'],
     'type-named-tuple-spacing': ['warn'],

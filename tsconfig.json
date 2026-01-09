@@ -17,23 +17,22 @@
       "esnext",
       "dom"
     ],
-        "baseUrl": ".",
-      "rootDir": ".",
-        "paths": {
-          "src/*": [
-            "src/*"
-          ]
-        }
+    "rootDir": ".",
+    "paths": {
+      "src/*": [
+        "./src/*"
+      ]
+    }
   },
-    "include": [
-      "src/**/*.ts",
-      "scripts/**/*.ts"
-    ],
-    "exclude": [
-      "dist",
-      "node_modules",
-      "*.js",
-      "eslint.config.js",
-      "rollup.config.js"
-    ]
+  "include": [
+    "src/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "*.js",
+    "eslint.config.js",
+    "rollup.config.js"
+  ]
 }
