@@ -2,12 +2,12 @@ import type { Linter } from 'eslint'
 
 export default {
     'array-callback-return': ['error'],
-    'dot-notation': ['error'],
-    'sort-imports': ['error', {
-        allowSeparatedGroups: false,
-        ignoreCase: false,
+    'dot-notation':          ['error'],
+    'sort-imports':          ['error', {
+        allowSeparatedGroups:  false,
+        ignoreCase:            false,
         ignoreDeclarationSort: true,
-        ignoreMemberSort: false,
+        ignoreMemberSort:      false,
         memberSyntaxSortOrder: [
             'none',
             'all',
@@ -15,13 +15,13 @@ export default {
             'single',
         ],
     }],
-    'prefer-const': ['error', { destructuring: 'all' }],
-    'prefer-template': ['error'],
-    'no-lonely-if': ['error'],
-    'no-console': ['error', { allow: ['warn', 'error'] }],
-    'no-implied-eval': ['error'],
-    'eqeqeq': ['error', 'always', { null: 'ignore' }],
-    'default-case-last': ['error'],
+    'prefer-const':         ['error', { destructuring: 'all' }],
+    'prefer-template':      ['error'],
+    'no-lonely-if':         ['error'],
+    'no-console':           ['error', { allow: ['warn', 'error'] }],
+    'no-implied-eval':      ['error'],
+    'eqeqeq':               ['error', 'always', { null: 'ignore' }],
+    'default-case-last':    ['error'],
     'no-case-declarations': 'off',
-    'no-undef': 'off',
+    'no-undef':             'off',
 } as Linter.RulesRecord

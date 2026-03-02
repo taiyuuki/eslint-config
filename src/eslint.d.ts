@@ -4,9 +4,9 @@ declare module 'eslint-plugin-vue' {
 
     const eslint_plugin_vue: {
         configs: { 'flat/recommended': Linter.Config; }
-        rules: Linter.RulesRecord
+        rules:   Linter.RulesRecord
         meta: {
-            name: string,
+            name:    string,
             version: string,
         }
     }

@@ -5,14 +5,14 @@ import ts from 'rollup-plugin-typescript2'
 
 const config = defineConfig([
     {
-        input: ['src/index.ts'],
+        input:  ['src/index.ts'],
         output: [
             {
-                dir: 'dist',
+                dir:    'dist',
                 format: 'esm',
             },
             {
-                file: 'dist/index.cjs',
+                file:   'dist/index.cjs',
                 format: 'cjs',
             },
         ],
@@ -24,9 +24,9 @@ const config = defineConfig([
 
     // 打包类型声明
     {
-        input: 'src/index.ts',
+        input:  'src/index.ts',
         output: {
-            dir: 'dist',
+            dir:    'dist',
             format: 'esm',
         },
         plugins: [

@@ -12,16 +12,16 @@ import import_rules from './imports'
 import unicorn_rules from './unicorn'
 
 interface TYKConfig {
-    indent?: number
-    ts?: boolean
-    vue?: boolean
-    jsx?: boolean
+    indent?:       number
+    ts?:           boolean
+    vue?:          boolean
+    jsx?:          boolean
     reactVersion?: string | 'detect'
-    markdown?: boolean
-    json?: boolean
-    ignores?: string[]
-    plugins?: ESLint.Plugin[]
-    rules?: Linter.RulesRecord
+    markdown?:     boolean
+    json?:         boolean
+    ignores?:      string[]
+    plugins?:      ESLint.Plugin[]
+    rules?:        Linter.RulesRecord
 }
 
 export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) {
@@ -47,7 +47,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     // import
     eslint_config.push({
         plugins: { import: import_eslint as ESLint.Plugin },
-        rules: import_rules,
+        rules:   import_rules,
     })
 
     // jsx
@@ -60,7 +60,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     // unicron
     eslint_config.push({
         plugins: { unicorn: unicorn_eslint as ESLint.Plugin },
-        rules: unicorn_rules,
+        rules:   unicorn_rules,
     })
 
     // markdown
@@ -105,79 +105,79 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
             typescript_eslint = await import('typescript-eslint')
         }
         eslint_config.push({ 
-            files: ['**/*.vue'],
+            files:           ['**/*.vue'],
             languageOptions: {
-                parser: vue_parser.default,
+                parser:  vue_parser.default,
                 globals: {
-                    $$: 'readonly',
-                    $: 'readonly',
-                    $computed: 'readonly',
-                    $customRef: 'readonly',
-                    $ref: 'readonly',
-                    $shallowRef: 'readonly',
-                    $toRef: 'readonly',
-                    EffectScope: 'readonly',
-                    axios: 'readonly',
-                    computed: 'readonly',
-                    createApp: 'readonly',
-                    customRef: 'readonly',
-                    defineAsyncComponent: 'readonly',
-                    defineComponent: 'readonly',
-                    defineCustomElement: 'readonly',
+                    $$:                     'readonly',
+                    $:                      'readonly',
+                    $computed:              'readonly',
+                    $customRef:             'readonly',
+                    $ref:                   'readonly',
+                    $shallowRef:            'readonly',
+                    $toRef:                 'readonly',
+                    EffectScope:            'readonly',
+                    axios:                  'readonly',
+                    computed:               'readonly',
+                    createApp:              'readonly',
+                    customRef:              'readonly',
+                    defineAsyncComponent:   'readonly',
+                    defineComponent:        'readonly',
+                    defineCustomElement:    'readonly',
                     defineSSRCustomElement: 'readonly',
-                    effectScope: 'readonly',
-                    getCurrentInstance: 'readonly',
-                    getCurrentScope: 'readonly',
-                    h: 'readonly',
-                    inject: 'readonly',
-                    isProxy: 'readonly',
-                    isReactive: 'readonly',
-                    isReadonly: 'readonly',
-                    isRef: 'readonly',
-                    markRaw: 'readonly',
-                    nextTick: 'readonly',
-                    onActivated: 'readonly',
-                    onBeforeMount: 'readonly',
-                    onBeforeUnmount: 'readonly',
-                    onBeforeUpdate: 'readonly',
-                    onDeactivated: 'readonly',
-                    onErrorCaptured: 'readonly',
-                    onMounted: 'readonly',
-                    onRenderTracked: 'readonly',
-                    onRenderTriggered: 'readonly',
-                    onScopeDispose: 'readonly',
-                    onServerPrefetch: 'readonly',
-                    onBeforeRouteUpdate: 'readonly',
-                    onBeforeRouteLeave: 'readonly',
-                    onUnmounted: 'readonly',
-                    onUpdated: 'readonly',
-                    provide: 'readonly',
-                    reactive: 'readonly',
-                    readonly: 'readonly',
-                    ref: 'readonly',
-                    resolveComponent: 'readonly',
-                    shallowReactive: 'readonly',
-                    shallowReadonly: 'readonly',
-                    shallowRef: 'readonly',
-                    toRaw: 'readonly',
-                    toRef: 'readonly',
-                    toRefs: 'readonly',
-                    triggerRef: 'readonly',
-                    unref: 'readonly',
-                    useAttrs: 'readonly',
-                    useCssModule: 'readonly',
-                    useCssVars: 'readonly',
-                    useRoute: 'readonly',
-                    useRouter: 'readonly',
-                    useSlots: 'readonly',
-                    watch: 'readonly',
-                    watchEffect: 'readonly',
-                    watchPostEffect: 'readonly',
-                    watchSyncEffect: 'readonly',
+                    effectScope:            'readonly',
+                    getCurrentInstance:     'readonly',
+                    getCurrentScope:        'readonly',
+                    h:                      'readonly',
+                    inject:                 'readonly',
+                    isProxy:                'readonly',
+                    isReactive:             'readonly',
+                    isReadonly:             'readonly',
+                    isRef:                  'readonly',
+                    markRaw:                'readonly',
+                    nextTick:               'readonly',
+                    onActivated:            'readonly',
+                    onBeforeMount:          'readonly',
+                    onBeforeUnmount:        'readonly',
+                    onBeforeUpdate:         'readonly',
+                    onDeactivated:          'readonly',
+                    onErrorCaptured:        'readonly',
+                    onMounted:              'readonly',
+                    onRenderTracked:        'readonly',
+                    onRenderTriggered:      'readonly',
+                    onScopeDispose:         'readonly',
+                    onServerPrefetch:       'readonly',
+                    onBeforeRouteUpdate:    'readonly',
+                    onBeforeRouteLeave:     'readonly',
+                    onUnmounted:            'readonly',
+                    onUpdated:              'readonly',
+                    provide:                'readonly',
+                    reactive:               'readonly',
+                    readonly:               'readonly',
+                    ref:                    'readonly',
+                    resolveComponent:       'readonly',
+                    shallowReactive:        'readonly',
+                    shallowReadonly:        'readonly',
+                    shallowRef:             'readonly',
+                    toRaw:                  'readonly',
+                    toRef:                  'readonly',
+                    toRefs:                 'readonly',
+                    triggerRef:             'readonly',
+                    unref:                  'readonly',
+                    useAttrs:               'readonly',
+                    useCssModule:           'readonly',
+                    useCssVars:             'readonly',
+                    useRoute:               'readonly',
+                    useRouter:              'readonly',
+                    useSlots:               'readonly',
+                    watch:                  'readonly',
+                    watchEffect:            'readonly',
+                    watchPostEffect:        'readonly',
+                    watchSyncEffect:        'readonly',
                 },
                 parserOptions: {
                     sourceType: 'module',
-                    parser: typescript_eslint.default.parser,
+                    parser:     typescript_eslint.default.parser,
                 },
             },
         })
@@ -197,9 +197,9 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
         stylistic_rules['@stylistic/indent'] = ['warn', config.indent]
     }
     eslint_config.push({
-        files: ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md}'],
+        files:   ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md}'],
         plugins: { '@stylistic': stylistic as ESLint.Plugin },
-        rules: stylistic_rules,
+        rules:   stylistic_rules,
         ignores: ['**/*.json'],
     })
 
