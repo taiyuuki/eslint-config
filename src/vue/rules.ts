@@ -1,7 +1,6 @@
 import type { Linter } from 'eslint'
 
 export default {
-    'vue/muti-word-component-names':   'off',
     'vue/require-macro-variable-name': ['error', {
         defineProps: 'props',
         defineEmits: 'emit',

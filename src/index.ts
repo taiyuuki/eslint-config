@@ -105,7 +105,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
             typescript_eslint = await import('typescript-eslint')
         }
         eslint_config.push({ 
-            files:           ['**/*.vue'],
+            files:           ['**/*.{vue,ts,js}'],
             languageOptions: {
                 parser:  vue_parser.default,
                 globals: {
