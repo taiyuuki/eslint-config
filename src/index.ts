@@ -80,7 +80,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     if (config?.ts) {
 
         typescript_eslint = await import('typescript-eslint')
-        const files = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts']
+        const files = ['**/*.{ts,tsx,mtx,cts,vue}']
         const recommendedConfigs = typescript_eslint.default.configs.recommended as Linter.Config[]
         recommendedConfigs.forEach(config => {
             eslint_config.push({
