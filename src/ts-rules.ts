@@ -5,6 +5,7 @@ export default {
     '@typescript-eslint/sort-type-constituents':      ['error'],
     '@typescript-eslint/consistent-type-imports':     ['error'],
     '@typescript-eslint/no-explicit-any':             'off',
+    'no-unused-vars':                                 'off',
     '@typescript-eslint/no-unused-vars':              ['error', {
         args:                           'all',
         argsIgnorePattern:              '^_',
