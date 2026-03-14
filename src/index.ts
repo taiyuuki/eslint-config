@@ -182,7 +182,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
             },
         })
         eslint_config.push({
-            files: ['**/*.vue'],
+            files: ['**/*.{vue,ts,js}'],
             rules: Object.assign({}, vue_stylistic, vue_rules), 
         })
     }
