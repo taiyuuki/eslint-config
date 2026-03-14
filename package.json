@@ -55,10 +55,11 @@
     "eslint": ">=8.23.0"
   },
   "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "eslint": "9"
-      }
+    "overrides": {
+      "minimatch": ">=10.0.0",
+      "brace-expansion": ">=2.0.0",
+      "flatted": ">=3.3.3",
+      "esbuild": ">=0.25.0"
     }
   }
 }
