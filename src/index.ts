@@ -27,6 +27,10 @@ interface TYKConfig {
 export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) {
     const config = Object.assign({ jsdoc: true, json: true, markdown: true }, tyk_config)
     const eslint_config: Linter.Config[] = []
+    const script_files = ['**/*.{js,cjs,mjs,jsx,ts,tsx,mts,cts,vue}']
+    const json_files = ['**/*.{json,jsonc,json5}']
+    const react_files = ['**/*.{jsx,tsx}']
+    const vue_files = ['**/*.vue']
     
     // ignores
     eslint_config.push({
@@ -41,11 +45,18 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     })
 
     // js
-    eslint_config.push(eslint_js.configs.recommended)
-    eslint_config.push({ rules: base_rules })
+    eslint_config.push({
+        files: script_files,
+        ...eslint_js.configs.recommended,
+    })
+    eslint_config.push({
+        files: script_files,
+        rules: base_rules,
+    })
 
     // import
     eslint_config.push({
+        files:   script_files,
         plugins: { import: import_eslint as ESLint.Plugin },
         rules:   import_rules,
     })
@@ -53,26 +64,36 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     // jsx
     if (config?.jsx) {
         const { default: jsx_eslint } = await import('eslint-plugin-react')
-        eslint_config.push(jsx_eslint.configs.flat.recommended)
+        eslint_config.push({
+            files: react_files,
+            ...jsx_eslint.configs.flat.recommended,
+        })
         eslint_config.push({ settings: { react: { version: config.reactVersion || 'detect' } } })
     }
 
     // unicron
     eslint_config.push({
+        files:   script_files,
         plugins: { unicorn: unicorn_eslint as ESLint.Plugin },
         rules:   unicorn_rules,
     })
 
     // markdown
     if (config?.markdown) {
-        const markdown_eslint = await import('eslint-plugin-markdown')
+        const markdown_eslint = await import('@eslint/markdown')
         eslint_config.push(...markdown_eslint.default.configs.recommended as Linter.Config[])
     }
 
     // json
     if (config?.json) {
         const json_eslint = await import('eslint-plugin-jsonc')
-        eslint_config.push(...json_eslint.default.configs['flat/recommended-with-jsonc'] as Linter.Config[])
+        const recommendedConfigs = json_eslint.default.configs['flat/recommended-with-jsonc'] as Linter.Config[]
+        recommendedConfigs.forEach(config => {
+            eslint_config.push({
+                ...config,
+                files: config.files || json_files,
+            })
+        })
     }
     
     // ts
@@ -98,7 +119,13 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
     // vue
     if (config?.vue) {
         const vue_eslint = await import('eslint-plugin-vue')
-        eslint_config.push(...vue_eslint.default.configs['flat/recommended'] as Linter.Config[])
+        const recommendedConfigs = vue_eslint.default.configs['flat/recommended'] as Linter.Config[]
+        recommendedConfigs.forEach(config => {
+            eslint_config.push({
+                ...config,
+                files: config.files || vue_files,
+            })
+        })
         
         const vue_parser = await import('vue-eslint-parser')
         if (!typescript_eslint) {
@@ -107,7 +134,6 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
         eslint_config.push({ 
             files:           ['**/*.{vue,ts,js}'],
             languageOptions: {
-                parser:  vue_parser.default,
                 globals: {
                     $$:                     'readonly',
                     $:                      'readonly',
@@ -175,6 +201,12 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
                     watchPostEffect:        'readonly',
                     watchSyncEffect:        'readonly',
                 },
+            },
+        })
+        eslint_config.push({
+            files:           vue_files,
+            languageOptions: {
+                parser:        vue_parser.default,
                 parserOptions: {
                     sourceType: 'module',
                     parser:     typescript_eslint.default.parser,
@@ -182,8 +214,9 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
             },
         })
         eslint_config.push({
-            files: ['**/*.{vue,ts,js}'],
-            rules: Object.assign({}, vue_stylistic, vue_rules), 
+            files:   vue_files,
+            plugins: { vue: vue_eslint.default as unknown as ESLint.Plugin },
+            rules:   Object.assign({}, vue_stylistic, vue_rules),
         })
     }
 
@@ -197,7 +230,7 @@ export default async function(tyk_config?: TYKConfig, ...rest: Linter.Config[]) 
         stylistic_rules['@stylistic/indent'] = ['warn', config.indent]
     }
     eslint_config.push({
-        files:   ['**/*.{js,jsx,ts,tsx,vue,css,scss,less,styl,stylus,sass,md}'],
+        files:   script_files,
         plugins: { '@stylistic': stylistic as ESLint.Plugin },
         rules:   stylistic_rules,
         ignores: ['**/*.json'],

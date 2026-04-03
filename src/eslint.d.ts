@@ -20,11 +20,11 @@ declare module '@eslint/js' {
     export default eslint
 }
 
-declare module 'eslint-plugin-markdown' {
+declare module '@eslint/markdown' {
     import type { Linter } from 'eslint'
 
-    const eslint_plugin_markdown: { configs: { recommended: Linter.Config; } }
-    export default eslint_plugin_markdown
+    const eslint_markdown: { configs: { recommended: Linter.Config[]; } }
+    export default eslint_markdown
 }
 
 declare module 'eslint-plugin-import' {
