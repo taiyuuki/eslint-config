@@ -1,7 +1,7 @@
 import type { ESLint, Linter } from 'eslint'
 import eslint_js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
-import import_eslint from 'eslint-plugin-import'
+import import_eslint from 'eslint-plugin-import-x'
 import unicorn_eslint from 'eslint-plugin-unicorn'
 import { stylistic_base } from './stylistic'
 import base_rules from './base-rules'
